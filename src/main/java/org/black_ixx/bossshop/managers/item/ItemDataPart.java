@@ -2,6 +2,7 @@ package org.black_ixx.bossshop.managers.item;
 
 import org.black_ixx.bossshop.core.BSBuy;
 import org.black_ixx.bossshop.managers.ClassManager;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -155,7 +156,7 @@ public abstract class ItemDataPart {
                 continue;
             }
             try {
-                if (!part.isSimilar(shop_item, player_item, buy, p)) {
+                if (!part.isMetaSimilar(shop_item, player_item, buy, p)) {
                     return false;
                 }
             } catch (Exception e) { //Seems like that ItemDataPart is not supported yet
@@ -218,6 +219,11 @@ public abstract class ItemDataPart {
             ClassManager.manager.getBugFinder().severe("Unable to work with itemdata '" + used_name.toLowerCase() + ":" + argument + ". Seems like it is not supported by your server version yet.");
             return item;
         }
+    }
+
+    public boolean isMetaSimilar(ItemStack shop_item, ItemStack player_item, BSBuy buy, Player p) {
+        return shop_item.getType() == player_item.getType()
+            && shop_item.getItemMeta().equals(player_item.getItemMeta());
     }
 
 
